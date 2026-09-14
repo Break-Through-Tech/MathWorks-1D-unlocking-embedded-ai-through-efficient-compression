@@ -2,7 +2,9 @@
 
 All project tasks, taken from this repo's [GitHub Issues](https://github.com/Break-Through-Tech/MathWorks-1D-unlocking-embedded-ai-through-efficient-compression/issues).
 
-## September Milestone
+Task write-ups and notebooks follow the naming convention in [AGENTS.md](../AGENTS.md#naming-convention).
+
+## M1: September Milestone
 
 ### Task 1: Download Data
 - **Issue:** [#7](https://github.com/Break-Through-Tech/MathWorks-1D-unlocking-embedded-ai-through-efficient-compression/issues/7)
@@ -13,6 +15,7 @@ All project tasks, taken from this repo's [GitHub Issues](https://github.com/Bre
 - **Issue:** [#2](https://github.com/Break-Through-Tech/MathWorks-1D-unlocking-embedded-ai-through-efficient-compression/issues/2)
 - **Assignees:** @lenan14
 - **Description:** Do initial data analysis and address missing values and outliers. Use Python packages/functions to survey the data so we address missing values and outliers.
+- **Write-up:** [M1_02_initial_data_analysis.md](M1_02_initial_data_analysis.md)
 
 ### Task 3: Equal Row Counts
 - **Issue:** [#8](https://github.com/Break-Through-Tech/MathWorks-1D-unlocking-embedded-ai-through-efficient-compression/issues/8)
