@@ -12,7 +12,7 @@
 |------------------|---------------|--------------------------------------------------------------------------|
 | Bezawit Gessesse | @bezqwit.     | Data exploration, visualization, overall project coordination            |
 | Chikaosolu Nnadozie | @cnnadozi   | Will fill this out later  |
-| Amina Hassan     | @aminahassan  | Data preprocessing, feature engineering, data validation                 |
+| Lena Ngo            | @lenan14    | Data preprocessing, initial data analysis, identified signal-level statistics     |
 | Priya Mehta      | @pmehta       | Model selection, hyperparameter tuning, model training and optimization  |
 | Chris Park       | @chrispark    | Model evaluation, performance analysis, results interpretation           |
 
