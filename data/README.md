@@ -16,6 +16,8 @@ Original source: data-acoustics.com/measurements/bearing-faults/bearing-2
 | `train.mat` | 393 samples (131 per class) |
 | `val.mat` | 27 samples |
 | `test.mat` | 102 samples |
+| `standardized.mat` | Standardized train and test signals (`float64`) |
+| `quantized.mat` | Standardized train, validation, and test signals (`int8`) |
 
 Each file contains two variables:
 - **`trainData` / `valData` / `testData`** — (N x 5000) float64 matrix. Each row is one vibration signal segment.
@@ -49,4 +51,20 @@ The original dataset contains 6 folders: baseline conditions, outer race faults,
 
 ## Remaining Preprocessing
 
-The data is ready to use except for **standardization**, which should be applied before model training.
+`standardized.mat` contains train and test signals standardized with the mean and
+standard deviation of each training column. To create `quantized.mat`, run
+`python scripts/quantize_data.py` from the repository root. The script applies
+the same training statistics to validation and quantizes all three splits with
+one symmetric, training-calibrated 8-bit scale. It preserves the original labels.
+
+In `quantized.mat`, `trainData`, `valData`, and `testData` are `int8` matrices.
+`scale` is a scalar `float64`, `zeroPoint` is zero, and `trainMean` and `trainStd`
+are the 5,000 training-column statistics. Recover approximate standardized
+values with `X_float = X_int8.astype(float) * scale`. New raw signals can first
+be standardized using `(X_raw - trainMean) / trainStd`.
+
+The scale is `max(abs(trainData)) / 127`, with rounding to the nearest integer
+and clipping to `[-127, 127]`. Validation and test values outside the training
+range may clip. Keep floating-point signals for models or evaluations that need
+their original precision; quantizing the input data does not quantize model
+weights or operations.

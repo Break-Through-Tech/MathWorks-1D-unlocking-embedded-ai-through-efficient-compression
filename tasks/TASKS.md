@@ -36,3 +36,9 @@ Task write-ups and notebooks follow the naming convention in [AGENTS.md](../AGEN
 - **Issue:** [#6](https://github.com/Break-Through-Tech/MathWorks-1D-unlocking-embedded-ai-through-efficient-compression/issues/6)
 - **Assignees:** @sbalagali, @cnnadozi, @lenan14, @bezqwit, @baohuy1303, @Tobechukwu-Ikenwe
 - **Description:** Add all updates and task completions to the README for documentation.
+
+## M2: October Milestone
+
+### Task 1: Quantize Data
+- **Description:** Quantize standardized bearing signals to signed 8-bit values using a scale calibrated on the training split.
+- **Write-up:** [M2_01_quantize_data.md](M2_01_quantize_data.md)
