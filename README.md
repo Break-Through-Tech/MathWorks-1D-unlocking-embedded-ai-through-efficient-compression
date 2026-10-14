@@ -14,6 +14,7 @@
 | Chikaosolu Nnadozie | @cnnadozi   | Will fill this out later  |
 | Anisha Bollapragada     | @anisharaob  | tbd                  |
 | Lena Ngo            | @lenan14    | Data preprocessing, initial data analysis, identified signal-level statistics     |
+| Huy Huynh        | @baohuy1303   | Data loading and validation (loaded and verified the train/val/test splits, set up project dependencies); model compression with projection (in progress) |
 | Priya Mehta      | @pmehta       | Model selection, hyperparameter tuning, model training and optimization  |
 | Chris Park       | @chrispark    | Model evaluation, performance analysis, results interpretation           |
 
