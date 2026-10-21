@@ -10,9 +10,11 @@
 
 | Name             | GitHub Handle | Contribution                                                             |
 |------------------|---------------|--------------------------------------------------------------------------|
-| Taylor Nguyen    | @taylornguyen | Data exploration, visualization, overall project coordination            |
-| Jordan Ramirez   | @jramirez     | Data collection, exploratory data analysis (EDA), dataset documentation  |
-| Amina Hassan     | @aminahassan  | Data preprocessing, feature engineering, data validation                 |
+| Bezawit Gessesse | @bezqwit.     | Data exploration, visualization, overall project coordination            |
+| Chikaosolu Nnadozie | @cnnadozi   | Will fill this out later  |
+| Anisha Bollapragada     | @anisharaob  | tbd                  |
+| Lena Ngo            | @lenan14    | Data preprocessing, initial data analysis, identified signal-level statistics     |
+| Huy Huynh        | @baohuy1303   | Data loading and validation (loaded and verified the train/val/test splits, set up project dependencies); model compression with projection (in progress) |
 | Priya Mehta      | @pmehta       | Model selection, hyperparameter tuning, model training and optimization  |
 | Chris Park       | @chrispark    | Model evaluation, performance analysis, results interpretation           |
 
@@ -53,16 +55,16 @@
 
 ## 📊 **Data Exploration**
 
-**You might consider describing the following (as applicable):**
 
-* The dataset(s) used: origin, format, size, type of data
-* Data exploration and preprocessing approaches
-* Insights from your Exploratory Data Analysis (EDA)
-* Challenges and assumptions when working with the dataset(s)
+The project uses the dataset stored in the data/ directory, including the training, validation, and test .mat files. Each file contains signal samples and associated labels. The dataset was inspected to confirm:
 
-**Potential visualizations to include:**
+- the expected matrix shapes and label formats,
+- the presence of all three classes: normal, innerracefault, outerracefault
+- balanced class counts across the training split
+- no missing or invalid values, 
+- did a preliminary review of unusually large or small signal values -- they were actually kept because they might reflect actual faults rather than fake data
 
-* Plots, charts, heatmaps, feature visualizations, sample dataset images
+This step established that the dataset was suitable for preprocessing and standardization before model training.
 
 ---
 

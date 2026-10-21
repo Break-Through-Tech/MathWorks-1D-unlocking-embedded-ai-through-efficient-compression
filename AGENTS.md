@@ -39,6 +39,3 @@ tasks/M1_02_initial_data_analysis.md
 | `M2_01_train_model.ipynb` | `01_train_model.ipynb` | Missing milestone prefix |
 | `M1_04_visualize_signals.ipynb` | `M1_4 Visualize Signals.ipynb` | Task number must be two digits; no spaces or capitals |
 
-### Enforcement
-
-Agents: every new or renamed notebook or task file must follow these rules. If you find an existing file that breaks them, point it out and suggest the correct name. Don't rename it without asking.
