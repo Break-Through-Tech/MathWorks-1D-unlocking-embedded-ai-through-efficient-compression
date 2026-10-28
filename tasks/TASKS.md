@@ -41,3 +41,14 @@ Task write-ups and notebooks follow the naming convention in [AGENTS.md](../AGEN
 - **Assignees:** @sbalagali, @cnnadozi, @lenan14, @bezqwit, @baohuy1303, @Tobechukwu-Ikenwe
 - **Description:** Add all updates and task completions to the README for documentation.
 - **Write-up:** [M1_06_update_docs.md](M1_06_update_docs.md)
+
+## M2: October Milestone
+
+### Task 1: Baseline Model
+- **Description:** Train the 1-D CNN baseline and save its checkpoint and scaler.
+- **Notebook:** [M2_01_baseline_model.mlx](../notebooks/M2_01_baseline_model.mlx)
+- **Evaluation function:** [M2_01_evaluate_baseline.m](../scripts/M2_01_evaluate_baseline.m) calculates validation accuracy, per-class and macro F1, checkpoint file size, and single-sample inference time. In MATLAB, run `addpath("scripts"); metrics = M2_01_evaluate_baseline();` from the repository root.
+
+### Task 2: Quantize Model
+- **Description:** Quantize the saved 1-D CNN baseline with training-data calibration and compare validation accuracy.
+- **Write-up:** [M2_02_quantize_model.md](M2_02_quantize_model.md)
