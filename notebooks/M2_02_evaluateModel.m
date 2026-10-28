@@ -1,5 +1,7 @@
-function results = evaluateModel(net, XTest, YTest, classNames, modelFilePath)
-% EVALUATEMODEL Computes accuracy, per-class precision/recall/TPR/FPR/F1,
+% Reusable function that takes any trained network plus test data and returns  results
+
+function results = M2_02_evaluateModel(net, XTest, YTest, classNames, modelFilePath)
+% M2_02_EVALUATEMODEL Computes accuracy, per-class precision/recall/TPR/FPR/F1,
 % model size, and inference speed for a trained network. Returns a
 % struct containing a per-class metrics table and an overall summary table.
 

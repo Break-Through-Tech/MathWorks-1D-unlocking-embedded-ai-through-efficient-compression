@@ -44,11 +44,21 @@ Task write-ups and notebooks follow the naming convention in [AGENTS.md](../AGEN
 
 ## M2: October Milestone
 
-### Task 1: Baseline Model
+### Task 1: Build + Train Baseline Model
+- **Issue:** [#14](https://github.com/Break-Through-Tech/MathWorks-1D-unlocking-embedded-ai-through-efficient-compression/issues/14)
 - **Description:** Train the 1-D CNN baseline and save its checkpoint and scaler.
 - **Notebook:** [M2_01_baseline_model.mlx](../notebooks/M2_01_baseline_model.mlx)
-- **Evaluation function:** [M2_01_evaluate_baseline.m](../scripts/M2_01_evaluate_baseline.m) calculates validation accuracy, per-class and macro F1, checkpoint file size, and single-sample inference time. In MATLAB, run `addpath("scripts"); metrics = M2_01_evaluate_baseline();` from the repository root.
 
-### Task 2: Quantize Model
-- **Description:** Quantize the saved 1-D CNN baseline with training-data calibration and compare validation accuracy.
-- **Write-up:** [M2_02_quantize_model.md](M2_02_quantize_model.md)
+### Task 2: Accuracy Function
+- **Issue:** [#15](https://github.com/Break-Through-Tech/MathWorks-1D-unlocking-embedded-ai-through-efficient-compression/issues/15)
+- **Assignees:** @sbalagali
+- **Description:** Evaluate baseline performance. Get accuracy, F1 score per class, and note size (MB) and inference speed (ms/sample) before any compression. This is the comparison point.
+- **Code:** [M2_02_evaluate_baseline.m](../scripts/M2_02_evaluate_baseline.m), [M2_02_evaluateModel.m](../notebooks/M2_02_evaluateModel.m)
+- **Write-up:** [M2_02_accuracy_function.md](milestone_2/M2_02_accuracy_function.md)
+
+### Task 3: Apply Pruning
+- **Issue:** [#16](https://github.com/Break-Through-Tech/MathWorks-1D-unlocking-embedded-ai-through-efficient-compression/issues/16)
+- **Assignees:** @cnnadozi
+- **Description:** Remove unnecessary weights from the trained model. Compare new accuracy/size/speed vs baseline.
+- **Notebook:** [M2_03_pruning.m](../notebooks/M2_03_pruning.m)
+- **Write-up:** [M2_03_pruning.md](milestone_2/M2_03_pruning.md)
