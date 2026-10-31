@@ -8,15 +8,15 @@
 
 **Example:**
 
-| Name             | GitHub Handle | Contribution                                                             |
-|------------------|---------------|--------------------------------------------------------------------------|
-| Bezawit Gessesse | @bezqwit.     | Data exploration, visualization, overall project coordination            |
-| Chikaosolu Nnadozie | @cnnadozi   | Will fill this out later  |
-| Anisha Bollapragada     | @anisharaob  | tbd                  |
-| Lena Ngo            | @lenan14    | Data preprocessing, initial data analysis, identified signal-level statistics     |
-| Huy Huynh        | @baohuy1303   | Data loading and validation (loaded and verified the train/val/test splits, set up project dependencies); model compression with projection (in progress) |
-| Priya Mehta      | @pmehta       | Model selection, hyperparameter tuning, model training and optimization  |
-| Chris Park       | @chrispark    | Model evaluation, performance analysis, results interpretation           |
+| Name                | GitHub Handle | Contribution                                                                                                                                              |
+| ------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Bezawit Gessesse    | @bezqwit.     | Data exploration, visualization, overall project coordination                                                                                             |
+| Chikaosolu Nnadozie | @cnnadozi     | Model pruning, performance comparsion, and codebase organization                                                                                          |
+| Anisha Bollapragada | @anisharaob   | tbd                                                                                                                                                       |
+| Lena Ngo            | @lenan14      | Data preprocessing, initial data analysis, identified signal-level statistics                                                                             |
+| Huy Huynh           | @baohuy1303   | Data loading and validation (loaded and verified the train/val/test splits, set up project dependencies); model compression with projection (in progress) |
+| Priya Mehta         | @pmehta       | Model selection, hyperparameter tuning, model training and optimization                                                                                   |
+| Chris Park          | @chrispark    | Model evaluation, performance analysis, results interpretation                                                                                            |
 
 ---
 
@@ -55,7 +55,6 @@
 
 ## 📊 **Data Exploration**
 
-
 The project uses the dataset stored in the data/ directory, including the training, validation, and test .mat files. Each file contains signal samples and associated labels. The dataset was inspected to confirm:
 
 - the expected matrix shapes and label formats,
@@ -75,7 +74,6 @@ This step established that the dataset was suitable for preprocessing and standa
 * Model(s) used (e.g., CNN with transfer learning, regression models)
 * Feature selection and Hyperparameter tuning strategies
 * Training setup (e.g., % of data for training/validation, evaluation metric, baseline performance)
-
 
 ---
 
