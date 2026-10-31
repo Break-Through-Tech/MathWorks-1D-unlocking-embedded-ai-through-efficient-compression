@@ -1,8 +1,8 @@
-function metrics = M2_01_evaluate_baseline()
+function metrics = M2_02_evaluate_baseline()
 % Evaluate the saved baseline on validation data before compression.
 % Run from MATLAB with:
 %   addpath("scripts");
-%   metrics = M2_01_evaluate_baseline();
+%   metrics = M2_02_evaluate_baseline();
 
 repoRoot = fileparts(fileparts(mfilename("fullpath")));
 dataDir = fullfile(repoRoot, "data");
@@ -67,8 +67,13 @@ f1(hasF1) = 2 .* precision(hasF1) .* recall(hasF1) ...
     ./ (precision(hasF1) + recall(hasF1));
 
 timingRuns = 100;
+warmupCalls = 200;
 oneSample = XValidation(1);
-minibatchpredict(baseline.net, oneSample); % Warm up prediction before timing.
+% The first ~100 predictions in a MATLAB session are 3-5x slower, so run
+% twice that many untimed before measuring.
+for warmupIndex = 1:warmupCalls
+    minibatchpredict(baseline.net, oneSample);
+end
 elapsedSeconds = zeros(timingRuns, 1);
 for runIndex = 1:timingRuns
     timer = tic;
@@ -82,7 +87,7 @@ metrics = struct( ...
     "accuracy", accuracy, ...
     "macroF1", mean(f1), ...
     "perClassF1", table(classNames, precision, recall, f1, ...
-        "VariableNames", ["Class", "Precision", "Recall", "F1"]), ...
+        VariableNames=["Class", "Precision", "Recall", "F1"]), ...
     "confusionMatrix", confusion, ...
     "modelFileSizeMB", modelFile.bytes / 1e6, ...
     "inferenceMsPerSample", median(elapsedSeconds) * 1000, ...
