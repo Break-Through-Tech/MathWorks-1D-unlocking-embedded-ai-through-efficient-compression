@@ -1,0 +1,5 @@
+Model,Accuracy,MacroF1,CheckpointSizeMB,ParameterMemoryMB,InferenceMsPerSample
+Baseline,1,1,0.195911,0.202828,2.53070833333333
+Taylor-pruned,1,1,0.073292,0.07158,2.65341666666667
+Projected + fine-tuned,1,1,0.047876,0.040424,2.9843125
+Quantized INT8,1,1,2.213187,0.0479736328125,19.9251666666667

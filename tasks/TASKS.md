@@ -46,6 +46,31 @@ Task write-ups and notebooks follow the naming convention in [AGENTS.md](../AGEN
 
 ## M2: October Milestone
 
-### Task 1: Quantize Data
-- **Description:** Quantize standardized bearing signals to signed 8-bit values using a scale calibrated on the training split.
-- **Write-up:** [M2_01_quantize_data.md](M2_01_quantize_data.md)
+### Task 1: Build Baseline Model
+- **Description:** Train a 1-D CNN on standardized bearing signals.
+- **Implementation:** [M2_01_baseline_model.m](../notebooks/M2_01_baseline_model.m)
+- **Write-up:** [M2_01_baseline_model.md](milestone_2/M2_01_baseline_model.md)
+
+### Task 2: Evaluate Baseline Performance
+- **Description:** Report accuracy, per-class F1, model size, and inference speed.
+- **Write-up:** [M2_02_accuracy_function.md](milestone_2/M2_02_accuracy_function.md)
+
+### Task 3: Apply Pruning
+- **Description:** Compare magnitude and Taylor pruning against the baseline.
+- **Implementation:** [M2_03_pruning.m](../notebooks/M2_03_pruning.m)
+- **Write-up:** [M2_03_pruning.md](milestone_2/M2_03_pruning.md)
+
+### Task 4: Apply Projection
+- **Description:** Compress the baseline with projection and measure its performance.
+- **Implementation:** [M2_04_projection.m](../notebooks/M2_04_projection.m)
+- **Write-up:** [M2_04_projection.md](milestone_2/M2_04_projection.md)
+
+### Task 5: Apply Quantization
+- **Description:** Quantize the trained baseline model and measure its performance.
+- **Implementation:** [M2_02_quantize_model.m](../scripts/M2_02_quantize_model.m)
+- **Write-up:** [M2_05_quantization.md](milestone_2/M2_05_quantization.md)
+
+### Task 6: Compare Compression Results
+- **Description:** Compare baseline, pruned, projected, and quantized models and plot accuracy, size, speed, and per-class F1.
+- **Implementation:** [M2_06_compare_compression.m](../notebooks/M2_06_compare_compression.m)
+- **Write-up:** [M2_06_compare_compression.md](milestone_2/M2_06_compare_compression.md)

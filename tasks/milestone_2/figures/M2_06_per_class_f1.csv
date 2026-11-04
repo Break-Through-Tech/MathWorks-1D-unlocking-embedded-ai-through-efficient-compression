@@ -1,0 +1,5 @@
+Model,InnerRaceFault,Normal,OuterRaceFault
+Baseline,1,1,1
+Taylor-pruned,1,1,1
+Projected + fine-tuned,1,1,1
+Quantized INT8,1,1,1
