@@ -18,10 +18,29 @@ Original source: data-acoustics.com/measurements/bearing-faults/bearing-2
 | `test.mat` | 102 samples |
 | `standardized.mat` | Standardized train and test signals (`float64`) |
 | `quantized.mat` | Standardized train, validation, and test signals (`int8`) |
+| `scaler.mat` | Training-set mean (`mu`) and standard deviation (`sigma`) per column |
+| `models/` | Trained model checkpoints (see [Models](#models)) |
 
 Each file contains two variables:
 - **`trainData` / `valData` / `testData`** — (N x 5000) float64 matrix. Each row is one vibration signal segment.
 - **`trainLabels` / `valLabels` / `testLabels`** — (N x 1) cell array of strings: `"Normal"`, `"InnerRaceFault"`, or `"OuterRaceFault"`.
+
+`scaler.mat` holds the training-set `mu` and `sigma` used to standardize new signals (e.g. the validation set) before prediction.
+
+## Models
+
+Trained model checkpoints live in `models/`, one subfolder per compression method. Each task script writes to its own subfolder and creates it if missing.
+
+| File | Created by | Variable |
+|------|------------|----------|
+| `models/baseline/baseline_net.mat` | M2 Task 1 (`notebooks/M2_01_baseline_model.mlx`) | `net` |
+| `models/pruned/magnitude_pruned_net.mat` | M2 Task 3 (`notebooks/M2_03_pruning.m`) | `net` |
+| `models/pruned/taylor_pruned_net.mat` | M2 Task 3 (`notebooks/M2_03_pruning.m`) | `net` |
+| `models/projected/projected_net.mat` | M2 Task 4 (`notebooks/M2_04_projection.m`) | `net` |
+| `models/projected/projected_finetuned_net.mat` | M2 Task 4 (`notebooks/M2_04_projection.m`) | `net` |
+| `models/quantized/quantized_net.mat` | M2 Task 5 (`scripts/M2_02_quantize_model.m`) | `qNet` |
+
+Note: `quantized.mat` (above) is the *input signals* stored as `int8`. It is not a model. The quantized model is `models/quantized/quantized_net.mat`.
 
 ## How to Load
 

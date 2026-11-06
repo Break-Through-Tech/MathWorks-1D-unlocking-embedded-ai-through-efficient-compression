@@ -3,7 +3,7 @@
 The baseline is a 1-D CNN trained on the standardized bearing-signal training
 split. The model definition and training workflow are in
 [`M2_01_baseline_model.m`](../../notebooks/M2_01_baseline_model.m); the trained
-network is saved as `data/baseline_net.mat`.
+network is saved as `data/models/baseline/baseline_net.mat`.
 
 The CNN uses three convolutional blocks with batch normalization and ReLU,
 max-pooling after the first two blocks, global average pooling, dropout, and a

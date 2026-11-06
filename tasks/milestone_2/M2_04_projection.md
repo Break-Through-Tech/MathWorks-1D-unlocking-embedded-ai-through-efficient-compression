@@ -30,7 +30,7 @@ Compress the trained baseline model with projection and compare the new accuracy
 
 | File | What it does |
 |------|--------------|
-| [`M2_04_projection.m`](../../notebooks/M2_04_projection.m) | Runs the sweep and fine-tuning and prints a comparison table against the baseline. Saves the projected models to `data/projected/` (`projected_net.mat`, `projected_finetuned_net.mat`) and the plot to `tasks/milestone_2/figures/`. |
+| [`M2_04_projection.m`](../../notebooks/M2_04_projection.m) | Runs the sweep and fine-tuning and prints a comparison table against the baseline. Saves the projected models to `data/models/projected/` (`projected_net.mat`, `projected_finetuned_net.mat`) and the plot to `tasks/milestone_2/figures/`. |
 
 ## How to Run
 

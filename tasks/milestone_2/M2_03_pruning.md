@@ -26,7 +26,7 @@ Remove unnecessary weights from the trained baseline model and compare the new a
 
 | File | What it does |
 |------|--------------|
-| [`M2_03_pruning.m`](../../notebooks/M2_03_pruning.m) | Runs both phases and prints a comparison table against the baseline. Saves the pruned models to `data/pruned/` (`magnitude_pruned_net.mat`, `taylor_pruned_net.mat`) and the plots to `tasks/milestone_2/figures/`. |
+| [`M2_03_pruning.m`](../../notebooks/M2_03_pruning.m) | Runs both phases and prints a comparison table against the baseline. Saves the pruned models to `data/models/pruned/` (`magnitude_pruned_net.mat`, `taylor_pruned_net.mat`) and the plots to `tasks/milestone_2/figures/`. |
 
 ## How to Run
 

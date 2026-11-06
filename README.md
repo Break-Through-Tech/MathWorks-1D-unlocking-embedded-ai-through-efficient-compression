@@ -11,7 +11,7 @@
 | Name                | GitHub Handle | Contribution                                                                                                                                              |
 | ------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Bezawit Gessesse    | @bezqwit.     | Data exploration, visualization, overall project coordination                                                                                             |
-| Chikaosolu Nnadozie | @cnnadozi     | Model pruning, performance comparsion, and codebase organization                                                                                          |
+| Chikaosolu Nnadozie | @cnnadozi     | Model pruning, performance comparsion, and overall codebase organization                                                                                  |
 | Anisha Bollapragada | @anisharaob   | tbd                                                                                                                                                       |
 | Lena Ngo            | @lenan14      | Data preprocessing, initial data analysis, identified signal-level statistics                                                                             |
 | Huy Huynh           | @baohuy1303   | Data loading and validation (loaded and verified the train/val/test splits, set up project dependencies); model compression with projection (80% fewer parameters with no accuracy loss) |

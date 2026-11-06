@@ -17,14 +17,15 @@
 repoRoot = fileparts(fileparts(mfilename("fullpath")));
 if isempty(repoRoot), repoRoot = pwd; end
 dataDir   = fullfile(repoRoot, "data");
-prunedDir = fullfile(dataDir, "pruned"); % pruned models are saved here
+modelsDir = fullfile(dataDir, "models"); % all model checkpoints live here
+prunedDir = fullfile(modelsDir, "pruned"); % pruned models are saved here
 figureDir = fullfile(repoRoot, "tasks", "milestone_2", "figures");
 if ~isfolder(prunedDir), mkdir(prunedDir); end
 if ~isfolder(figureDir), mkdir(figureDir); end
 
 rng(0); % same shuffling and fine-tuning results every run
 
-baseline = load(fullfile(dataDir, "baseline_net.mat"), "net");
+baseline = load(fullfile(modelsDir, "baseline", "baseline_net.mat"), "net");
 baseNet  = baseline.net;
 
 % Training data is already standardized. Validation data is standardized with
@@ -200,7 +201,7 @@ exportgraphics(gcf, fullfile(figureDir, "M2_03_taylor_pruning.png"));
 
 models = {baseNet, magnitudeNet, taylorNet};
 modelNames = ["Baseline"; sprintf("Magnitude %.0f%%", 100 * bestSparsity); "Taylor + fine-tune"];
-modelFiles = [fullfile(dataDir, "baseline_net.mat"); magnitudeFile; taylorFile];
+modelFiles = [fullfile(modelsDir, "baseline", "baseline_net.mat"); magnitudeFile; taylorFile];
 
 numModels = numel(models);
 accuracy = zeros(numModels, 1); macroF1 = zeros(numModels, 1);

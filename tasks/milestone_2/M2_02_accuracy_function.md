@@ -12,7 +12,7 @@ Evaluate baseline performance before any compression. Get accuracy, F1 score per
 
 | File | What it does |
 |------|--------------|
-| [`M2_02_evaluate_baseline.m`](../../scripts/M2_02_evaluate_baseline.m) | Loads `data/baseline_net.mat`, standardizes the validation set with the saved training scaler, and reports the baseline metrics. |
+| [`M2_02_evaluate_baseline.m`](../../scripts/M2_02_evaluate_baseline.m) | Loads `data/models/baseline/baseline_net.mat`, standardizes the validation set with the saved training scaler, and reports the baseline metrics. |
 | [`M2_02_evaluateModel.m`](../../notebooks/M2_02_evaluateModel.m) | Reusable function that takes any trained network plus test data and returns the same kind of metrics. Use this to evaluate the compressed models in Tasks 3–5. |
 
 ## How to Run

@@ -19,10 +19,10 @@ The comparison expects these files:
 
 | Model | Checkpoint |
 |---|---|
-| Baseline | `data/baseline_net.mat` |
-| Taylor-pruned | `data/pruned/taylor_pruned_net.mat` |
-| Projected + fine-tuned | `data/projected/projected_finetuned_net.mat` |
-| Quantized INT8 | `data/quantized_net.mat` |
+| Baseline | `data/models/baseline/baseline_net.mat` |
+| Taylor-pruned | `data/models/pruned/taylor_pruned_net.mat` |
+| Projected + fine-tuned | `data/models/projected/projected_finetuned_net.mat` |
+| Quantized INT8 | `data/models/quantized/quantized_net.mat` |
 
 To regenerate a checkpoint, run its task script first:
 

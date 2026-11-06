@@ -5,8 +5,11 @@
 
 repoRoot = fileparts(fileparts(mfilename("fullpath")));
 dataDir = fullfile(repoRoot, "data");
+modelsDir = fullfile(dataDir, "models"); % all model checkpoints live here
+quantizedDir = fullfile(modelsDir, "quantized");
+if ~isfolder(quantizedDir), mkdir(quantizedDir); end
 
-baseline = load(fullfile(dataDir, "baseline_net.mat"), "net");
+baseline = load(fullfile(modelsDir, "baseline", "baseline_net.mat"), "net");
 standardized = load(fullfile(dataDir, "standardized.mat"), ...
     "trainData", "trainLabels");
 validation = load(fullfile(dataDir, "val.mat"), "valData", "valLabels");
@@ -53,12 +56,12 @@ quantizedParameterMB = sum(quantizedMetrics.("ParameterMemory (MB)"));
 fprintf("Estimated parameter memory: baseline %.4f MB; INT8 %.4f MB\n", ...
     baselineParameterMB, quantizedParameterMB);
 
-outputFile = fullfile(dataDir, "quantized_net.mat");
+outputFile = fullfile(quantizedDir, "quantized_net.mat");
 save(outputFile, "qNet", "-v7.3");
 saved = load(outputFile, "qNet");
 assert(quantizationDetails(saved.qNet).IsQuantized, ...
     "The saved network did not reload as quantized.");
-baselineFile = dir(fullfile(dataDir, "baseline_net.mat"));
+baselineFile = dir(fullfile(modelsDir, "baseline", "baseline_net.mat"));
 quantizedFile = dir(outputFile);
 fprintf("Checkpoint file size (includes MATLAB overhead): baseline %.1f KiB; INT8 %.1f KiB\n", ...
     baselineFile.bytes / 1024, quantizedFile.bytes / 1024);

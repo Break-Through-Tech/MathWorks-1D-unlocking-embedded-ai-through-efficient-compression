@@ -21,7 +21,8 @@
 repoRoot = fileparts(fileparts(mfilename("fullpath")));
 if isempty(repoRoot), repoRoot = pwd; end
 dataDir      = fullfile(repoRoot, "data");
-projectedDir = fullfile(dataDir, "projected"); % projected models are saved here
+modelsDir    = fullfile(dataDir, "models"); % all model checkpoints live here
+projectedDir = fullfile(modelsDir, "projected"); % projected models are saved here
 figureDir    = fullfile(repoRoot, "tasks", "milestone_2", "figures");
 if ~isfolder(projectedDir), mkdir(projectedDir); end
 if ~isfolder(figureDir), mkdir(figureDir); end
@@ -32,7 +33,7 @@ assert(exist("compressNetworkUsingProjection", "file") > 0, ...
 
 rng(0); % same shuffling and fine-tuning results every run
 
-baseline = load(fullfile(dataDir, "baseline_net.mat"), "net");
+baseline = load(fullfile(modelsDir, "baseline", "baseline_net.mat"), "net");
 baseNet  = baseline.net;
 
 % Training data is already standardized. Validation data is standardized with
@@ -168,7 +169,7 @@ save(fineTunedFile, "net");
 models = {baseNet, projectedNet, fineTunedNet};
 modelNames = ["Baseline"; sprintf("Projected %.0f%%", 100 * chosenGoal); ...
     "Projected + fine-tune"];
-modelFiles = [fullfile(dataDir, "baseline_net.mat"); projectedFile; fineTunedFile];
+modelFiles = [fullfile(modelsDir, "baseline", "baseline_net.mat"); projectedFile; fineTunedFile];
 
 numModels = numel(models);
 accuracy = zeros(numModels, 1); macroF1 = zeros(numModels, 1);

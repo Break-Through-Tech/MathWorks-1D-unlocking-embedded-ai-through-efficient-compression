@@ -6,7 +6,7 @@ function metrics = M2_02_evaluate_baseline()
 
 repoRoot = fileparts(fileparts(mfilename("fullpath")));
 dataDir = fullfile(repoRoot, "data");
-modelPath = fullfile(dataDir, "baseline_net.mat");
+modelPath = fullfile(dataDir, "models", "baseline", "baseline_net.mat");
 
 assert(isfile(modelPath), "Baseline checkpoint not found: %s", modelPath);
 assert(isfile(fullfile(dataDir, "standardized.mat")), ...

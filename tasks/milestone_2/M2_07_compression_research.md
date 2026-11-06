@@ -1,4 +1,4 @@
-# M2 Task 8: Researching Model Compression
+# M2 Task 7: Researching Model Compression
 
 **Owner:** Lena  
 **Milestone:** October - Model Development & Compression

@@ -4,7 +4,8 @@
 
 | Path | Contents |
 |------|----------|
-| `data/` | Dataset files (`train.mat`, `val.mat`, `test.mat`) |
+| `data/` | Dataset files (`train.mat`, `val.mat`, `test.mat`) and preprocessed data (`standardized.mat`, `scaler.mat`, `quantized.mat`) |
+| `data/models/` | Trained model checkpoints, one subfolder per method (`baseline/`, `pruned/`, `projected/`, `quantized/`) |
 | `notebooks/` | Jupyter notebooks, one per task |
 | `tasks/` | `TASKS.md` (the task index) plus one write-up per task |
 

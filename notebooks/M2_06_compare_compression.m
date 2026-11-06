@@ -3,6 +3,7 @@
 
 repoRoot = fileparts(fileparts(mfilename("fullpath")));
 dataDir = fullfile(repoRoot, "data");
+modelsDir = fullfile(dataDir, "models"); % all model checkpoints live here
 figureDir = fullfile(repoRoot, "tasks", "milestone_2", "figures");
 if ~isfolder(figureDir)
     mkdir(figureDir);
@@ -10,10 +11,10 @@ end
 
 modelNames = ["Baseline"; "Taylor-pruned"; "Projected + fine-tuned"; "Quantized INT8"];
 modelFiles = [
-    fullfile(dataDir, "baseline_net.mat")
-    fullfile(dataDir, "pruned", "taylor_pruned_net.mat")
-    fullfile(dataDir, "projected", "projected_finetuned_net.mat")
-    fullfile(dataDir, "quantized_net.mat")
+    fullfile(modelsDir, "baseline", "baseline_net.mat")
+    fullfile(modelsDir, "pruned", "taylor_pruned_net.mat")
+    fullfile(modelsDir, "projected", "projected_finetuned_net.mat")
+    fullfile(modelsDir, "quantized", "quantized_net.mat")
 ];
 modelVariables = ["net"; "net"; "net"; "qNet"];
 
