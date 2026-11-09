@@ -79,3 +79,10 @@ Task write-ups and notebooks follow the naming convention in [AGENTS.md](../AGEN
 - **Issue:** [#20](https://github.com/Break-Through-Tech/MathWorks-1D-unlocking-embedded-ai-through-efficient-compression/issues/20)
 - **Description:** Research pruning, projection, and quantization and document key implementation considerations and trade-offs for the team.
 - **Write-up:** [M2_07_compression_research.md](milestone_2/M2_07_compression_research.md)
+
+## M3: Embedded Code Generation Stretch Goal
+
+### Task 1: Generate Embedded Code
+- **Description:** Generate C/C++ code for the projected, fine-tuned network and verify its predictions against MATLAB on the held-out test set.
+- **Implementation:** [M3_01_generate_embedded_code.m](../scripts/M3_01_generate_embedded_code.m), [M3_01_embedded_predict.m](../scripts/M3_01_embedded_predict.m)
+- **Write-up:** [M3_01_embedded_code_generation.md](milestone_3/M3_01_embedded_code_generation.md)
