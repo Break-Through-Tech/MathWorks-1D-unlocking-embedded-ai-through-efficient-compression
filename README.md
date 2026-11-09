@@ -1,121 +1,94 @@
-# Unlocking Embedded AI Through Efficient Compression
+# Smarter Devices, Smaller Models: Unlocking Embedded AI Through Efficient Compression
 
-> 💡 **Note for the team:** This is just a template. Update the above title with your AI Studio Challenge Project name. Remove all guidance notes and example text in this template and populate this README with your own content. You can work on this README throughout AI Studio, and get feedback from your AI Studio Coach and Challenge Advisor before finalizing it.  
+This Fall 2026 Break Through Tech AI Studio project, developed with MathWorks, explores whether a neural network can identify rolling-element bearing faults while using fewer model parameters. We trained a one-dimensional convolutional neural network (1-D CNN) on vibration signals, compared pruning, projection, and quantization, and generated C code for the projected model.
 
----
+## Team
 
-### 👥 **Team Members**
+| Name | GitHub handle | Contribution |
+|---|---|---|
+| Bezawit Gessesse | @bezqwit | Project coordination, data exploration, and baseline model |
+| Chikaosolu Nnadozie | @cnnadozi | Magnitude and Taylor pruning; performance comparison |
+| Anisha Bollapragada | @anisharaob | Data preprocessing and standardization |
+| Lena Ngo | @lenan14 | Initial data analysis, compression research, and MATLAB C code generation and prediction verification |
+| Huy Huynh | @baohuy1303 | Data loading and validation, and model compression with projection |
 
-**Example:**
+## Project Overview
 
-| Name                | GitHub Handle | Contribution                                                                                                                                              |
-| ------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Bezawit Gessesse    | @bezqwit.     | Data exploration, visualization, overall project coordination                                                                                             |
-| Chikaosolu Nnadozie | @cnnadozi     | Model pruning, performance comparsion, and overall codebase organization                                                                                  |
-| Anisha Bollapragada | @anisharaob   | tbd                                                                                                                                                       |
-| Lena Ngo            | @lenan14      | Data preprocessing, initial data analysis, identified signal-level statistics                                                                             |
-| Huy Huynh           | @baohuy1303   | Data loading and validation (loaded and verified the train/val/test splits, set up project dependencies); model compression with projection (80% fewer parameters with no accuracy loss) |
-| Priya Mehta         | @pmehta       | Model selection, hyperparameter tuning, model training and optimization                                                                                   |
-| Chris Park          | @chrispark    | Model evaluation, performance analysis, results interpretation                                                                                            |
+The challenge was to build a fault-diagnosis model for vibration signals and study the trade-offs between accuracy, model size, and inference time that matter for embedded use. The project uses the Rolling Element Bearing Fault Diagnosis dataset, with three labels: Normal, InnerRaceFault, and OuterRaceFault. The supplied signals were resampled to 48,828 Hz and split into 5,000-sample windows.
 
----
+Our baseline is a 1-D CNN trained on standardized signal windows. We evaluated magnitude pruning and Taylor filter pruning, low-rank projection, and post-training INT8 quantization. As a stretch goal, we used MATLAB Coder to generate C for the projected, fine-tuned network and checked its predictions against MATLAB on the held-out test split.
 
-## 🎯 **Project Highlights**
+## Highlights
 
-**Example:**
+- On the 27-sample validation split, the baseline and the Taylor-pruned, projected, and quantized models each achieved 100% accuracy and macro F1 in the recorded comparison.
+- Projection reduced the baseline from 50,707 to 10,106 learnable parameters (about 80% fewer) while retaining 100% validation accuracy. Fine-tuning kept the same validation score.
+- MATLAB Coder generated C for the projected, fine-tuned model. Its MEX predictions matched MATLAB's predicted classes on all 102 held-out test signals; both classified all 102 correctly. The largest score difference was `6.11e-10`.
+- The generated code was verified in MATLAB Online.
 
-- Developed a machine learning model using `[model type/technique]` to address `[challenge project task]`.
-- Achieved `[key metric or result]`, demonstrating `[value or impact]` for `[host company]`.
-- Generated actionable insights to inform business decisions at `[host company or stakeholders]`.
-- Implemented `[specific methodology]` to address industry constraints or expectations.
+## Repository Guide
 
----
+| Path | Contents |
+|---|---|
+| [`data/`](data/) | Dataset splits, preprocessing outputs, and saved model checkpoints. See [`data/README.md`](data/README.md) for the dataset source, license, and file details. |
+| [`notebooks/`](notebooks/) | Data exploration notebooks and MATLAB scripts for baseline training, pruning, projection, and comparison. |
+| [`scripts/`](scripts/) | Quantization and embedded code-generation scripts. |
+| [`tasks/`](tasks/) | Milestone task index, write-ups, and comparison figures. Start with [`tasks/TASKS.md`](tasks/TASKS.md). |
+| [`Challenge-Project-Overview.md`](Challenge-Project-Overview.md) | The original challenge description and success criteria. |
 
-## 👩🏽‍💻 **Setup and Installation**
+## Setup and running the project
 
-**Provide step-by-step instructions so someone else can run your code and reproduce your results. Depending on your setup, include:**
+The data and trained checkpoints are included in `data/`. The modeling and compression workflows use MATLAB. From the repository root in MATLAB, run:
 
-* How to clone the repository
-* How to install dependencies
-* How to set up the environment
-* How to access the dataset(s)
-* How to run the notebook or scripts
+```matlab
+run("notebooks/M2_01_baseline_model.m")       % Train the baseline
+run("notebooks/M2_03_pruning.m")              % Magnitude and Taylor pruning
+run("notebooks/M2_04_projection.m")           % Projection sweep and fine-tuning
+run("scripts/M2_02_quantize_model.m")          % Post-training model quantization
+run("notebooks/M2_06_compare_compression.m")  % Compare saved checkpoints
+```
 
----
+The comparison script expects the corresponding checkpoints to exist under `data/models/`; run the training or compression script first if a checkpoint is missing. The MATLAB workflows require Deep Learning Toolbox. Projection and quantization also require the Model Compression Library support package; quantization additionally requires Fixed-Point Designer and MATLAB R2024b or later. The baseline training script documents MATLAB R2023b or later. MATLAB Coder is needed for the code-generation stretch goal.
 
-## 🏗️ **Project Overview**
+Python is used for the separate input-signal quantization script. To set up that part from the repository root:
 
-**Describe:**
+```powershell
+python -m pip install -r requirements.txt
+python scripts/quantize_data.py
+```
 
-- How this project is connected to the Break Through Tech AI Program
-- Your AI Studio host company and the project objective and scope
-- The real-world significance of the problem and the potential impact of your work
+This generates `data/quantized.mat`; it quantizes the input data, not the model weights. Instructions and details for generating embedded code are in [`tasks/milestone_3/M3_01_embedded_code_generation.md`](tasks/milestone_3/M3_01_embedded_code_generation.md).
 
----
+## Data exploration and preparation
 
-## 📊 **Data Exploration**
+The dataset contains 393 training windows (131 per class), 27 validation windows, and 102 test windows. Each window has 5,000 samples. The team checked the matrix shapes, labels, class counts, and values for missing or invalid entries. Unusually high or low signal values were retained because they may reflect actual fault behavior.
 
-The project uses the dataset stored in the data/ directory, including the training, validation, and test .mat files. Each file contains signal samples and associated labels. The dataset was inspected to confirm:
+Signals are standardized per sample position using the mean and standard deviation calculated from the training split. Those same training statistics are applied to validation and test data; they are saved in `data/scaler.mat`. The preprocessed files and MATLAB/Python loading examples are documented in [`data/README.md`](data/README.md).
 
-- the expected matrix shapes and label formats,
-- the presence of all three classes: normal, innerracefault, outerracefault
-- balanced class counts across the training split
-- no missing or invalid values, 
-- did a preliminary review of unusually large or small signal values -- they were actually kept because they might reflect actual faults rather than fake data
+## Model and evaluation
 
-This step established that the dataset was suitable for preprocessing and standardization before model training.
+The baseline is a three-block 1-D CNN with 16, 32, and 64 convolutional filters, followed by global average pooling, dropout, and a three-class output layer. It has 50,707 learnable parameters. Training uses Adam and cross-entropy loss; the baseline configuration and training notes are in [`tasks/milestone_2/M2_01_baseline_model.md`](tasks/milestone_2/M2_01_baseline_model.md).
 
----
+The table below reports the saved comparison results. Accuracy and macro F1 are from the 27-sample validation split. Checkpoint size is the saved MATLAB `.mat` file size; parameter memory is an estimate based on stored parameters, not a measurement on an embedded target. Inference times are specific to the machine and MATLAB run used for the comparison.
 
-## 🧠 **Model Development**
+| Model | Validation accuracy | Macro F1 | Checkpoint size | Parameter memory | Inference time |
+|---|---:|---:|---:|---:|---:|
+| Baseline | 100% | 1.00 | 0.196 MB | 0.203 MB | 2.53 ms/sample |
+| Taylor-pruned | 100% | 1.00 | 0.073 MB | 0.072 MB | 2.65 ms/sample |
+| Projected + fine-tuned | 100% | 1.00 | 0.048 MB | 0.040 MB | 2.98 ms/sample |
+| Quantized INT8 | 100% | 1.00 | 2.213 MB | 0.048 MB | 19.93 ms/sample |
 
-**You might consider describing the following (as applicable):**
+The comparison script uses 200 warm-up predictions and the median of 100 single-sample predictions. These measurements include MATLAB prediction-call overhead and should only be compared within the same run environment. In this comparison, quantization reduced parameter memory but did not make inference faster, and its saved checkpoint was larger than the other checkpoints. Magnitude pruning also creates zero weights but does not reduce the dense network's parameter count or guarantee faster inference.
 
-* Model(s) used (e.g., CNN with transfer learning, regression models)
-* Feature selection and Hyperparameter tuning strategies
-* Training setup (e.g., % of data for training/validation, evaluation metric, baseline performance)
+Separately, storing the standardized signal data as INT8 reduced the file from about 19 MB to about 2.7 MB. This is not a like-for-like model-size comparison: the quantized data file also contains the validation split and training statistics.
 
----
+## Limitations and next steps
 
-## 📈 **Results & Key Findings**
+The validation set is small, so a perfect score is encouraging but not enough to establish how the model will perform on new bearings, operating conditions, or measurement hardware. The dataset was collected on one test rig under controlled laboratory conditions. Inference timing here is from MATLAB on a computer, not an embedded board.
 
-**You might consider describing the following (as applicable):**
+A useful next step would be testing on data from additional rigs or operating conditions, then running the generated C code on a specified target device and measuring its inference speed and memory use.
 
-* Performance metrics (e.g., Accuracy, F1 score, RMSE)
-* How your model performed
-* Insights from evaluating model fairness
+## References and acknowledgements
 
-**Potential visualizations to include:**
-
-* Confusion matrix, precision-recall curve, feature importance plot, prediction distribution, outputs from fairness or explainability tools
-
----
-
-## 🚀 **Next Steps**
-
-**You might consider addressing the following (as applicable):**
-
-* What are some of the limitations of your model?
-* What would you do differently with more time/resources?
-* What additional datasets or techniques would you explore?
-
----
-
-## 📝 **License**
-
-Specify how your project can be used by others. Choose an appropriate license and link it here (e.g., MIT, Apache 2.0). Make sure your Challenge Advisor approves of the selected license type. 
-
-**Example:**
-This project is licensed under the MIT License.
-
----
-
-## 📄 **References** (Optional but encouraged)
-
-Cite relevant papers, articles, or resources that supported your project.
-
----
-
-## 🙏 **Acknowledgements** (Optional but encouraged)
-
-Thank your Challenge Advisor, host company representatives, TA, and others who supported your project.
+- [MathWorks rolling-element bearing fault diagnosis example](https://www.mathworks.com/help/predmaint/ug/rolling-element-bearing-fault-diagnosis-using-deep-learning.html)
+- [Original bearing dataset source](https://data-acoustics.com/measurements/bearing-faults/bearing-2). Dataset terms are described in [`data/README.md`](data/README.md).
+- Many thanks to our Challenge Advisor Shanmukh Srinivas, AI Studio Coach Rashidah Carr, MathWorks, and Break Through Tech for supporting the project.
