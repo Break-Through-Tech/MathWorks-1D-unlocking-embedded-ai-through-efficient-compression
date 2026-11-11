@@ -45,12 +45,10 @@ sizeMB = zeros(numModels, 1);
 msPerSample = zeros(numModels, 1);
 parameterMemoryMB = zeros(numModels, 1);
 f1Values = zeros(numModels, numel(classNames));
-baseline = load(modelFiles(1), "net");
-
 for i = 1:numModels
     savedModel = load(modelFiles(i), modelVariables(i));
     model = savedModel.(modelVariables(i));
-    scores = minibatchpredict(model, XValidation);
+    scores = minibatchpredict(model, XValidation, ExecutionEnvironment="cpu");
     predictions = scores2label(scores, classNames);
     predictions = categorical(predictions(:), classNames);
 
@@ -77,19 +75,14 @@ for i = 1:numModels
     macroF1(i) = mean(f1);
     checkpoint = dir(modelFiles(i));
     sizeMB(i) = checkpoint.bytes / 1e6;
-    if i == numModels
-        [~, networkMetrics] = estimateNetworkMetrics(baseline.net, model);
-        parameterMemoryMB(i) = sum(networkMetrics.("ParameterMemory (MB)"));
-    else
-        parameterMemoryMB(i) = sum(cellfun(@numel, model.Learnables.Value)) ...
-            * 4 / 1e6;
-    end
+    networkMetrics = estimateNetworkMetrics(model);
+    parameterMemoryMB(i) = sum(networkMetrics.("ParameterMemory (MB)"));
     msPerSample(i) = timeOneSample(model, oneSample);
 end
 
 comparison = table(modelNames, accuracy, macroF1, sizeMB, parameterMemoryMB, msPerSample, ...
     VariableNames=["Model", "Accuracy", "MacroF1", "CheckpointSizeMB", "ParameterMemoryMB", ...
-    "InferenceMsPerSample"]);
+    "CpuInferenceMsPerSample"]);
 perClassF1 = array2table(f1Values, ...
     VariableNames=matlab.lang.makeValidName(classNames));
 perClassF1 = addvars(perClassF1, modelNames, Before=1, ...
@@ -129,7 +122,7 @@ grid on;
 nexttile;
 bar(categorical(modelNames), msPerSample);
 ylabel("Milliseconds per sample");
-title("Single-sample inference latency");
+title("CPU single-sample inference latency");
 grid on;
 
 nexttile;
@@ -144,17 +137,17 @@ exportgraphics(figureHandle, ...
     fullfile(figureDir, "M2_06_comparison.png"), Resolution=200);
 close(figureHandle);
 fprintf("Saved comparison tables and plot to %s\n", figureDir);
-fprintf("Inference timing uses 200 warmups and the median of 100 single-sample runs.\n");
+fprintf("Inference timing uses the CPU, 200 warmups, and the median of 100 single-sample runs.\n");
 fprintf("Checkpoint size includes MATLAB serialization overhead; parameter memory is reported separately.\n");
 
 function ms = timeOneSample(model, oneSample)
 for i = 1:200
-    minibatchpredict(model, oneSample);
+    minibatchpredict(model, oneSample, ExecutionEnvironment="cpu");
 end
 elapsed = zeros(100, 1);
 for i = 1:numel(elapsed)
     timer = tic;
-    minibatchpredict(model, oneSample);
+    minibatchpredict(model, oneSample, ExecutionEnvironment="cpu");
     elapsed(i) = toc(timer);
 end
 ms = median(elapsed) * 1000;

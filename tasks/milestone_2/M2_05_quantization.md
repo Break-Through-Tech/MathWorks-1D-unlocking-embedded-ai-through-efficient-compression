@@ -16,6 +16,18 @@ The comparison script for Task 6 expects this saved checkpoint and reports
 validation accuracy, per-class F1, checkpoint size, and single-sample inference
 latency alongside the baseline, pruned, and projected models.
 
+To report the quantized model's size and speed alongside the baseline without
+running the other models, use:
+
+```matlab
+addpath("scripts"); results = M2_05_benchmark_quantized();
+```
+
+The benchmark prints checkpoint size, estimated parameter memory, and median
+CPU milliseconds per sample after 200 warmups. It uses the same standardized
+validation signal for both models. Its timing measures MATLAB fixed-point
+simulation, not deployed INT8 execution.
+
 ## Input Data Quantization
 
 Separately from the model, the input signals can also be stored as INT8.

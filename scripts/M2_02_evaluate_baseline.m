@@ -41,7 +41,7 @@ XValidation = num2cell(single(((validation.valData - scaler.mu) ...
     ./ scaler.sigma).'), 1).';
 YValidation = YValidation(:);
 
-scores = minibatchpredict(baseline.net, XValidation);
+scores = minibatchpredict(baseline.net, XValidation, ExecutionEnvironment="cpu");
 YPrediction = scores2label(scores, classNames);
 YPrediction = YPrediction(:);
 
@@ -72,12 +72,12 @@ oneSample = XValidation(1);
 % The first ~100 predictions in a MATLAB session are 3-5x slower, so run
 % twice that many untimed before measuring.
 for warmupIndex = 1:warmupCalls
-    minibatchpredict(baseline.net, oneSample);
+    minibatchpredict(baseline.net, oneSample, ExecutionEnvironment="cpu");
 end
 elapsedSeconds = zeros(timingRuns, 1);
 for runIndex = 1:timingRuns
     timer = tic;
-    minibatchpredict(baseline.net, oneSample);
+    minibatchpredict(baseline.net, oneSample, ExecutionEnvironment="cpu");
     elapsedSeconds(runIndex) = toc(timer);
 end
 
@@ -90,6 +90,7 @@ metrics = struct( ...
         VariableNames=["Class", "Precision", "Recall", "F1"]), ...
     "confusionMatrix", confusion, ...
     "modelFileSizeMB", modelFile.bytes / 1e6, ...
+    "inferenceEnvironment", "cpu", ...
     "inferenceMsPerSample", median(elapsedSeconds) * 1000, ...
     "timingRuns", timingRuns);
 
@@ -97,7 +98,7 @@ fprintf("Baseline validation accuracy: %.4f\n", metrics.accuracy);
 fprintf("Baseline validation macro F1: %.4f\n", metrics.macroF1);
 disp(metrics.perClassF1);
 fprintf("Checkpoint file size: %.4f MB\n", metrics.modelFileSizeMB);
-fprintf("Inference time: %.4f ms/sample (median of %d runs)\n", ...
+fprintf("CPU inference time: %.4f ms/sample (median of %d runs)\n", ...
     metrics.inferenceMsPerSample, metrics.timingRuns);
 fprintf("Timing uses one standardized sample per prediction; preprocessing is excluded.\n");
 end
