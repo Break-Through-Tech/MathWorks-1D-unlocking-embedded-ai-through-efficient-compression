@@ -46,16 +46,22 @@ assert(all(baselineSupport.Supported) ...
 
 config = coder.config("mex");
 config.DeepLearningConfig = coder.DeepLearningConfig(TargetLibrary="none");
-if exist("M2_05_baseline_predict_mex", "file") ~= 3
+if needsBuild("M2_05_baseline_predict_mex", ...
+        fullfile(repoRoot, "scripts", "M2_05_baseline_predict.m"), baselineFile)
     fprintf("Compiling baseline CPU MEX...\n");
     codegen -config config M2_05_baseline_predict ...
         -args {zeros(1, 5000, "single")}
 else
     fprintf("Using the existing baseline CPU MEX.\n");
 end
-fprintf("Compiling quantized CPU MEX...\n");
-codegen -config config M2_05_quantized_predict ...
-    -args {zeros(1, 5000, "single")}
+if needsBuild("M2_05_quantized_predict_mex", ...
+        fullfile(repoRoot, "scripts", "M2_05_quantized_predict.m"), quantizedFile)
+    fprintf("Compiling quantized CPU MEX...\n");
+    codegen -config config M2_05_quantized_predict ...
+        -args {zeros(1, 5000, "single")}
+else
+    fprintf("Using the existing quantized CPU MEX.\n");
+end
 
 validation = load(fullfile(dataDir, "val.mat"), "valData", "valLabels");
 scaler = load(fullfile(dataDir, "scaler.mat"), "mu", "sigma");
@@ -117,4 +123,16 @@ for i = 1:numel(elapsedSeconds)
     elapsedSeconds(i) = toc(timer);
 end
 ms = median(elapsedSeconds) * 1000;
+end
+
+function rebuild = needsBuild(mexFunction, entryFile, checkpointFile)
+mexPath = which(mexFunction);
+if isempty(mexPath)
+    rebuild = true;
+    return
+end
+built = dir(mexPath);
+entry = dir(entryFile);
+checkpoint = dir(checkpointFile);
+rebuild = built.datenum < max([entry.datenum, checkpoint.datenum]);
 end

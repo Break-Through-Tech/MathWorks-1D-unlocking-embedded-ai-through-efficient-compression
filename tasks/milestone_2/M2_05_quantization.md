@@ -49,6 +49,21 @@ inference latency. The quantized entry point supplies one signal in `CBT`
 compiled INT8 result must be measured; the MATLAB
 simulation result alone does not establish deployment speed.
 
+Two compiled CPU runs on the MATLAB Online host gave these results:
+
+| Model | Validation accuracy | Run 1 (ms/sample) | Run 2 (ms/sample) |
+|---|---:|---:|---:|
+| Baseline MEX | 1.0000 | 1.3030 | 0.9905 |
+| Quantized INT8 MEX | 1.0000 | 4.3885 | 4.3680 |
+
+The compiled quantized model is faster than its MATLAB simulation result of
+39.766 ms/sample, but remains slower than the compiled baseline on this host.
+Its estimated parameter memory is 0.047974 MB, versus 0.19258 MB for the
+baseline. The compiled benchmark uses generic C code with no optimized CPU
+library, so these timings do not predict performance on a different runtime or
+target device. The script reuses a generated MEX until its entry-point source
+or model checkpoint changes.
+
 ## Input Data Quantization
 
 Separately from the model, the input signals can also be stored as INT8.
