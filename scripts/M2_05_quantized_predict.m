@@ -7,7 +7,8 @@ if isempty(qNet)
         "data/models/quantized/quantized_net.mat");
 end
 
-formattedSignal = dlarray(reshape(single(standardizedSignal), 1, 5000), "CT");
+% The quantized 1-D pooling layers require an explicit batch dimension.
+formattedSignal = dlarray(reshape(single(standardizedSignal), 1, 1, 5000), "CBT");
 dlScores = predict(qNet, formattedSignal);
 scores = reshape(extractdata(dlScores), 1, 3);
 end

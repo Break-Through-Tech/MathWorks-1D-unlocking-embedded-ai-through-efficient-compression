@@ -46,9 +46,13 @@ assert(all(baselineSupport.Supported) ...
 
 config = coder.config("mex");
 config.DeepLearningConfig = coder.DeepLearningConfig(TargetLibrary="none");
-fprintf("Compiling baseline CPU MEX...\n");
-codegen -config config M2_05_baseline_predict ...
-    -args {zeros(1, 5000, "single")}
+if exist("M2_05_baseline_predict_mex", "file") ~= 3
+    fprintf("Compiling baseline CPU MEX...\n");
+    codegen -config config M2_05_baseline_predict ...
+        -args {zeros(1, 5000, "single")}
+else
+    fprintf("Using the existing baseline CPU MEX.\n");
+end
 fprintf("Compiling quantized CPU MEX...\n");
 codegen -config config M2_05_quantized_predict ...
     -args {zeros(1, 5000, "single")}

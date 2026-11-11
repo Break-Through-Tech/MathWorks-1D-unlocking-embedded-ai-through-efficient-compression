@@ -44,7 +44,9 @@ This builds separate CPU MEX functions for the baseline and quantized networks,
 checks compiled INT8 predictions against the MATLAB quantized network on the
 validation split, and times both compiled functions on the same signal. MEX
 compilation can take several minutes, but its time is excluded from the reported
-inference latency. A faster compiled INT8 result must be measured; the MATLAB
+inference latency. The quantized entry point supplies one signal in `CBT`
+(channel, batch, time) format, as required by its 1-D pooling layers. A faster
+compiled INT8 result must be measured; the MATLAB
 simulation result alone does not establish deployment speed.
 
 ## Input Data Quantization
