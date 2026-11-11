@@ -7,6 +7,15 @@ repoRoot = fileparts(fileparts(mfilename("fullpath")));
 dataDir = fullfile(repoRoot, "data");
 baselineFile = fullfile(dataDir, "models", "baseline", "baseline_net.mat");
 quantizedFile = fullfile(dataDir, "models", "quantized", "quantized_net.mat");
+% Older MATLAB Online copies kept checkpoints directly under data/.
+if ~isfile(baselineFile)
+    baselineFile = fullfile(dataDir, "baseline_net.mat");
+end
+if ~isfile(quantizedFile)
+    quantizedFile = fullfile(dataDir, "quantized_net.mat");
+end
+assert(isfile(baselineFile), "Missing baseline checkpoint: %s", baselineFile);
+assert(isfile(quantizedFile), "Missing quantized checkpoint: %s", quantizedFile);
 baseline = load(baselineFile, "net");
 quantized = load(quantizedFile, "qNet");
 assert(quantizationDetails(quantized.qNet).IsQuantized, ...
