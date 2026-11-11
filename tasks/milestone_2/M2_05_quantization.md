@@ -28,6 +28,25 @@ CPU milliseconds per sample after 200 warmups. It uses the same standardized
 validation signal for both models. Its timing measures MATLAB fixed-point
 simulation, not deployed INT8 execution.
 
+The measured MATLAB Online CPU results were 5.51 ms/sample for the floating
+point baseline and 39.766 ms/sample for the quantized simulation. The quantized
+model used 0.047974 MB of estimated parameter memory versus 0.19258 MB for the
+baseline, but its simulated prediction was slower.
+
+To test whether compiled INT8 inference improves speed, use MATLAB R2026b or
+newer with MATLAB Coder and the MATLAB Coder Interface for Deep Learning:
+
+```matlab
+addpath("scripts"); results = M2_05_benchmark_compiled_quantized();
+```
+
+This builds separate CPU MEX functions for the baseline and quantized networks,
+checks compiled INT8 predictions against the MATLAB quantized network on the
+validation split, and times both compiled functions on the same signal. MEX
+compilation can take several minutes, but its time is excluded from the reported
+inference latency. A faster compiled INT8 result must be measured; the MATLAB
+simulation result alone does not establish deployment speed.
+
 ## Input Data Quantization
 
 Separately from the model, the input signals can also be stored as INT8.
