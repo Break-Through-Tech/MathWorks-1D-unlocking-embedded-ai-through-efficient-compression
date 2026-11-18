@@ -15,8 +15,8 @@ Break Through Tech AI Studio, Fall 2026. Host company: MathWorks.
 | Anisha Bollapragada           | @AnishaRaoB        |              |
 | Lena Ngo                      | @lenan14           |              |
 | Huy Huynh                     | @baohuy1303        |              |
-| **Sahana Balagali**           | @sbalagali         |              |
-| **Tobechukwu Ikenwe Othniel** | @Tobechukwu-Ikenwe |              |
+| Sahana Balagali           | @sbalagali         |              |
+| Tobechukwu Ikenwe Othniel | @Tobechukwu-Ikenwe |              |
 
 ## Project Highlights
 

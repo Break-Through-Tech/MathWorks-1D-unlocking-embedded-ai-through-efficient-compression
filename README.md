@@ -11,6 +11,7 @@ This Fall 2026 Break Through Tech AI Studio project, developed with MathWorks, e
 | Anisha Bollapragada | @anisharaob | Data preprocessing and standardization |
 | Lena Ngo | @lenan14 | Initial data analysis, compression research, and MATLAB C code generation and prediction verification |
 | Huy Huynh | @baohuy1303 | Data loading and validation, and model compression with projection |
+| Sahana Balagali | @sbalagali | Data visualization and model perfomance evaluation pipeline |
 
 ## Project Overview
 
