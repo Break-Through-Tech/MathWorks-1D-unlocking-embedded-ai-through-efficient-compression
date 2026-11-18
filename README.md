@@ -82,6 +82,18 @@ The comparison script uses 200 warm-up predictions and the median of 100 single-
 
 Separately, storing the standardized signal data as INT8 reduced the file from about 19 MB to about 2.7 MB. This is not a like-for-like model-size comparison: the quantized data file also contains the validation split and training statistics.
 
+## Stretch Goal: Embedded Code Generation
+
+Using MATLAB Coder, we generated C code for the projected, fine-tuned 1-D CNN and packaged a static library for the model. The generated entry point accepts one raw 5,000-sample, single-precision signal, applies the training-set standardization statistics, and returns three fault-class scores.
+
+- Both MEX and static-library generation completed successfully.
+- MATLAB and the generated MEX made the same predicted-class decision for all 102 held-out test signals.
+- Both implementations classified all 102 test signals correctly.
+- The largest absolute difference between MATLAB and generated scores was `6.111804e-10`, below the verification tolerance of `1e-4`.
+- The MEX build and generated C static library provide an implementation outside the usual MATLAB prediction workflow. The generated `codegen/` files are recreated by `run("scripts/M3_01_generate_embedded_code.m")` and are not committed to this repository.
+
+This stretch goal verifies code generation and prediction agreement in MATLAB.
+
 ## Limitations and Next Steps
 
 The validation set is small, so a perfect score is encouraging but not enough to establish how the model will perform on new bearings, operating conditions, or measurement hardware. The dataset was collected on one test rig under controlled laboratory conditions. Inference timing here is from MATLAB on a computer, not an embedded board.
