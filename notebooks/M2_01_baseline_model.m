@@ -1,39 +1,29 @@
-% 1. LOAD STANDARDIZED DATA (from September Task 5)
-% standardized.mat holds trainData, testData, and their labels. 
-% Each row is one 5000-sample vibration window.
-load("standardized.mat") %[output:91e8c1ca]
-YTrain = categorical(trainLabels);
-YTest  = categorical(testLabels);
+% load data
+raw     = load("train.mat");
+rawVal  = load("val.mat");
+rawTest = load("test.mat");
 
-% just checking that there are 3 classes, 131 per class in train, 34 in test
-categories(YTrain)
-summary(YTrain)
-summary(YTest)
+% global standardize
+% one mean and one std for the whole training set!!! (instead of per col)
+mu    = mean(raw.trainData, "all");
+sigma = std(raw.trainData, 1, "all");     
 
-% checking September's standardization
-mean(trainData(:)), std(trainData(:), 1)
-mean(mean(trainData, 1)), mean(std(trainData, 1, 1))
-mean(trainData(1:3, :), 2)
+trainData  = (raw.trainData    - mu) / sigma;
+valDataStd = (rawVal.valData   - mu) / sigma;
+testData   = (rawTest.testData - mu) / sigma;
 
-% 2. STANDARDIZE THE VALIDATION SET
-raw    = load("train.mat");
-rawVal = load("val.mat");
+% labels
+YTrain = categorical(raw.trainLabels);
+YTest  = categorical(rawTest.testLabels);
+YVal   = categorical(rawVal.valLabels, categories(YTrain));
+summary(YTrain), summary(YVal), summary(YTest)  
 
-% fit the mean and std on the TRAINING data only, one value per column
-mu    = mean(raw.trainData, 1);
-sigma = std(raw.trainData, 1, 1);
+% sanity check...should print about 0 and 1
+% mean(trainData(:)), std(trainData(:), 1)
 
-% checking that standaridzation matches trainData
-max(abs((raw.trainData - mu) ./ sigma - trainData), [], "all")
+save("scaler.mat", "mu", "sigma");        % now two single numbers
 
-% applying the training mean/std to val
-valDataStd = (rawVal.valData - mu) ./ sigma;
-YVal = categorical(rawVal.valLabels, categories(YTrain));
-summary(YVal)
-
-save("scaler.mat", "mu", "sigma");
-
-% 3. RESHAPE DATA (was causing an error and this is recommended way to fix 
+% 3. reshape data, was getting errors beforehand
 XTrain = num2cell(trainData.', 1).';   
 XVal   = num2cell(valDataStd.', 1).';
 XTest  = num2cell(testData.', 1).';
@@ -95,12 +85,3 @@ numLearnables = sum(cellfun(@numel, net.Learnables.Value))
 
 save("baseline_net.mat", "net", "testAcc");
 d = dir("baseline_net.mat"); sizeMB = d.bytes / 1e6
-
-%[appendix]{"version":"1.0"}
-%---
-%[metadata:view]
-%   data: {"layout":"onright","rightPanelPercent":40}
-%---
-%[output:91e8c1ca]
-%   data: {"dataType":"error","outputData":{"errorType":"runtime","text":"Error using <a href=\"matlab:matlab.lang.internal.introspective.errorDocCallback('load')\" style=\"font-weight:bold\">load<\/a>\nUnable to find file or directory 'standardized.mat'."}}
-%---
